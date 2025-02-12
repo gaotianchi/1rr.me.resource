@@ -6,3 +6,9 @@ spring:
 logging:
   level:
     root: info
+springdoc:
+  api-docs:
+    enabled: true
+    path: /docs/api
+  swagger-ui:
+    path: /docs/swagger-ui.html
