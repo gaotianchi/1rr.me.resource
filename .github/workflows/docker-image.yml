@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag wtf:${{ github.sha }}
+        run: docker build . --file Dockerfile --tag 2022jean/wtf:${{ github.sha }}
 
       - name: Push Docker image to Docker Hub
-        run: docker push wtf:${{ github.sha }}
+        run: docker push 2022jean/wtf:${{ github.sha }}
