@@ -2,7 +2,7 @@ spring:
   application:
     name: wtf
   profiles:
-    active: dev-office
+    active: dev-home
 logging:
   level:
     root: info

@@ -68,7 +68,7 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>docker-profile</id>
+            <id>docker-compose</id>
             <activation>
                 <os>
                     <family>unix</family>

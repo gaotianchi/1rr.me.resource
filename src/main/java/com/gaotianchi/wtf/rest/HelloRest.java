@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author gaotianchi
  * @since 2025/2/11 20:03
  **/
-@Slf4j
 @RestController
 @RequestMapping("hello")
 public class HelloRest {
@@ -32,10 +31,6 @@ public class HelloRest {
             @RequestParam(value = "name", defaultValue = "World")
             String name
     ) {
-        log.info("hello {}", name);
-        log.debug("hello {}", name);
-        log.error("hello {}", name);
-        log.warn("hello {}", name);
         return "Hello " + name;
     }
 }
