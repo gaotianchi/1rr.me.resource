@@ -6,29 +6,37 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.gaotianchi</groupId>
     <artifactId>wtf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>wtf</name>
-    <description>wtf</description>
-    <url/>
+    <description>短链接服务</description>
+    <url>https://github.com/gaotianchi/wtf</url>
     <licenses>
-        <license/>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>gaotianchi</id>
+            <name>Gao Tianchi</name>
+            <email>6159984@gmail.com</email>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:https://github.com/gaotianchi/wtf.git</connection>
+        <developerConnection>scm:git:https://github.com/gaotianchi/wtf.git</developerConnection>
+        <url>https://github.com/gaotianchi/wtf</url>
     </scm>
     <properties>
         <java.version>17</java.version>
+        <spring.version>6.0.0</spring.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
