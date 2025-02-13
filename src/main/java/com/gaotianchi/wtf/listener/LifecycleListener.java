@@ -1,5 +1,7 @@
 package com.gaotianchi.wtf.listener;
 
+import com.gaotianchi.wtf.task.TaskManager;
+import com.gaotianchi.wtf.task.startup.MysqlConnectionCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
@@ -13,11 +15,22 @@ import org.springframework.stereotype.Component;
 public class LifecycleListener implements SmartLifecycle {
 
     private boolean isRunning = false;
+    private final TaskManager taskManager = new TaskManager();
+
+    private final MysqlConnectionCheck mysqlConnectionCheck;
+    public LifecycleListener(MysqlConnectionCheck mysqlConnectionCheck) {
+        this.mysqlConnectionCheck = mysqlConnectionCheck;
+    }
+
 
     @Override
     public void start() {
         isRunning = true;
         log.info("Spring boot 开始运行");
+
+        taskManager.addTask(mysqlConnectionCheck);
+
+        taskManager.runTasks();
     }
 
     @Override
