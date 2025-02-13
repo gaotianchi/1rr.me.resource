@@ -16,12 +16,12 @@ import java.util.concurrent.CompletableFuture;
  **/
 @Component
 @Slf4j
-public class DatabaseConnectionCheck implements Task {
+public class DatabaseConnectionCheckTask implements Task {
 
     private final DataSource dataSource;
     private final RedisConnectionFactory redisConnectionFactory;
 
-    public DatabaseConnectionCheck(DataSource dataSource, RedisConnectionFactory redisConnectionFactory) {
+    public DatabaseConnectionCheckTask(DataSource dataSource, RedisConnectionFactory redisConnectionFactory) {
         this.dataSource = dataSource;
         this.redisConnectionFactory = redisConnectionFactory;
     }

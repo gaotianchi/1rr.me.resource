@@ -1,12 +1,10 @@
 package com.gaotianchi.wtf.rest;
 
 import com.gaotianchi.wtf.service.ShortLinkService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,7 +13,9 @@ import java.net.URISyntaxException;
  * @author gaotianchi
  * @since 2025/2/13 10:02
  **/
+@Slf4j
 @RestController
+@RequestMapping("")
 public class ShortLinkRest {
 
     private final ShortLinkService shortLinkService;
@@ -24,7 +24,7 @@ public class ShortLinkRest {
         this.shortLinkService = shortLinkService;
     }
 
-    @GetMapping("/{code}")
+    @GetMapping("{code}")
     public ResponseEntity<Void> redirect(
             @PathVariable String code,
             @RequestParam(value = "password", required = false) String password

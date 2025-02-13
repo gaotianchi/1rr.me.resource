@@ -1,7 +1,7 @@
 package com.gaotianchi.wtf.listener;
 
 import com.gaotianchi.wtf.task.Task;
-import com.gaotianchi.wtf.task.startup.DatabaseConnectionCheck;
+import com.gaotianchi.wtf.task.startup.DatabaseConnectionCheckTask;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
@@ -19,10 +19,10 @@ public class LifecycleListener implements SmartLifecycle {
 
     private boolean isRunning = false;
 
-    private final DatabaseConnectionCheck databaseConnectionCheck;
+    private final DatabaseConnectionCheckTask databaseConnectionCheckTask;
 
-    public LifecycleListener(DatabaseConnectionCheck databaseConnectionCheck) {
-        this.databaseConnectionCheck = databaseConnectionCheck;
+    public LifecycleListener(DatabaseConnectionCheckTask databaseConnectionCheckTask) {
+        this.databaseConnectionCheckTask = databaseConnectionCheckTask;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class LifecycleListener implements SmartLifecycle {
         log.info("Spring boot 开始运行");
 
         List<Task> taskList = new ArrayList<>();
-        taskList.add(databaseConnectionCheck);
+        taskList.add(databaseConnectionCheckTask);
 
 
         for (Task task : taskList) {
