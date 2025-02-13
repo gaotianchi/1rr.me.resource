@@ -1,8 +1,7 @@
 package com.gaotianchi.wtf.listener;
 
 import com.gaotianchi.wtf.task.Task;
-import com.gaotianchi.wtf.task.startup.MysqlConnectionCheck;
-import com.gaotianchi.wtf.task.startup.RedisConnectionCheck;
+import com.gaotianchi.wtf.task.startup.DatabaseConnectionCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
@@ -20,14 +19,11 @@ public class LifecycleListener implements SmartLifecycle {
 
     private boolean isRunning = false;
 
-    private final RedisConnectionCheck redisConnectionCheck;
-    private final MysqlConnectionCheck mysqlConnectionCheck;
+    private final DatabaseConnectionCheck databaseConnectionCheck;
 
-    public LifecycleListener(RedisConnectionCheck redisConnectionCheck, MysqlConnectionCheck mysqlConnectionCheck) {
-        this.redisConnectionCheck = redisConnectionCheck;
-        this.mysqlConnectionCheck = mysqlConnectionCheck;
+    public LifecycleListener(DatabaseConnectionCheck databaseConnectionCheck) {
+        this.databaseConnectionCheck = databaseConnectionCheck;
     }
-
 
     @Override
     public void start() {
@@ -35,8 +31,8 @@ public class LifecycleListener implements SmartLifecycle {
         log.info("Spring boot 开始运行");
 
         List<Task> taskList = new ArrayList<>();
-        taskList.add(redisConnectionCheck);
-        taskList.add(mysqlConnectionCheck);
+        taskList.add(databaseConnectionCheck);
+
 
         for (Task task : taskList) {
             if (task != null) {
