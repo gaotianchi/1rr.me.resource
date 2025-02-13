@@ -1,37 +1,27 @@
 package com.gaotianchi.wtf.task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author gaotianchi
  * @since 2025/2/13 15:17
  **/
 public class TaskChain {
 
-    private Task firstTask;
+    private final List<Task> tasks;
+
+    public TaskChain() {
+        this.tasks = new ArrayList<>();
+    }
 
     public void addTask(Task task) {
-        if (firstTask == null) {
-            firstTask = task;
-        } else {
-            Task current = firstTask;
-            while (current instanceof TaskChain taskChain) {
-                if (taskChain.firstTask == null) {
-                    taskChain.firstTask = task;
-                    break;
-                }
-                current = taskChain.firstTask;
-            }
-        }
+        tasks.add(task);
     }
 
     public void execute() throws Exception {
-        Task current = firstTask;
-        while (current != null) {
-            current.execute();
-            if (current instanceof TaskChain) {
-                current = ((TaskChain) current).firstTask;
-            } else {
-                break;
-            }
+        for (Task task : tasks) {
+            task.execute();
         }
     }
 }
