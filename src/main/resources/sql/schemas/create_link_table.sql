@@ -1,9 +1,12 @@
-DROP DATABASE IF EXISTS user;
+DROP DATABASE IF EXISTS link;
 
-CREATE TABLE user
+CREATE TABLE link
 (
-    username   VARCHAR(255) UNIQUE NOT NULL,
-    password   VARCHAR(255)        NOT NULL,
+    short_url  VARCHAR(255) UNIQUE NOT NULL,
+    long_url   VARCHAR(255)        NOT NULL,
+    user_id    INT                 NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
 
     id         INT                 NOT NULL AUTO_INCREMENT,
 
