@@ -31,9 +31,6 @@ public class RedisConnectionCheck implements Task {
             } else {
                 throw new Exception("Redis 连接异常: 未收到 PONG 响应");
             }
-        } catch (Exception e) {
-            log.error("Redis 连接异常", e);
-            throw new Exception("Redis 连接异常: " + e.getMessage());
         }
     }
 }
