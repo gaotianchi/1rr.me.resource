@@ -24,7 +24,7 @@ public class ShortLinkRest {
         this.shortLinkService = shortLinkService;
     }
 
-    @GetMapping("{code}")
+    @GetMapping("s/{code}")
     public ResponseEntity<Void> redirect(
             @PathVariable String code,
             @RequestParam(value = "password", required = false) String password
