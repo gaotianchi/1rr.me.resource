@@ -2,8 +2,10 @@
   <configuration default="false" name="WtfApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev-office" />
     <envs>
+      <env name="GOOGLE_CLIENT_ID" value="740215658195-pe06a3so364eturh150q9hk1gdkucp60.apps.googleusercontent.com" />
       <env name="MOCK" value="false" />
       <env name="RESET" value="true" />
+      <env name="GOOGLE_CLIENT_SECRET" value="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" />
     </envs>
     <module name="wtf" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.gaotianchi.wtf.WtfApplication" />
