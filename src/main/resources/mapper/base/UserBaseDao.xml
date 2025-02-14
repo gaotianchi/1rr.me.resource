@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaotianchi.wtf.dao.base.UserBaseDao">
+
+    <resultMap type="com.gaotianchi.wtf.entity.User" id="UserMap">
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="emailIsVerified" column="email_is_verified" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+        <result property="deletedAt" column="deleted_at" jdbcType="TIMESTAMP"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="deletedBy" column="deleted_by" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insertUser" keyProperty="id" useGeneratedKeys="true">
+        insert into user(username, password, email, email_is_verified, created_at, updated_at, deleted_at, created_by,
+                         updated_by, deleted_by, is_deleted)
+        values (#{username}, #{password}, #{email}, #{emailIsVerified}, #{createdAt}, #{updatedAt}, #{deletedAt},
+                #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
+    </insert>
+
+    <insert id="insertUserInBatches" keyProperty="id" useGeneratedKeys="true">
+        insert into user(username, password, email, email_is_verified, created_at, updated_at, deleted_at, created_by,
+        updated_by, deleted_by, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.emailIsVerified}, #{entity.createdAt},
+            #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy},
+            #{entity.isDeleted})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateUserInBatches" keyProperty="id" useGeneratedKeys="true">
+        insert into user(username, password, email, email_is_verified, created_at, updated_at, deleted_at, created_by,
+        updated_by, deleted_by, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.emailIsVerified}, #{entity.createdAt},
+            #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy},
+            #{entity.isDeleted})
+        </foreach>
+        on duplicate key update
+        username = values(username),
+        password = values(password),
+        email = values(email),
+        email_is_verified = values(email_is_verified),
+        created_at = values(created_at),
+        updated_at = values(updated_at),
+        deleted_at = values(deleted_at),
+        created_by = values(created_by),
+        updated_by = values(updated_by),
+        deleted_by = values(deleted_by),
+        is_deleted = values(is_deleted)
+    </insert>
+
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="emailIsVerified != null">
+                email_is_verified = #{emailIsVerified},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_by = #{createdBy},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                deleted_by = #{deletedBy},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserById">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+
+    <select id="selectUserById" resultMap="UserMap">
+        select username,
+               password,
+               email,
+               email_is_verified,
+               id,
+               created_at,
+               updated_at,
+               deleted_at,
+               created_by,
+               updated_by,
+               deleted_by,
+               is_deleted
+        from user
+        where id = #{id}
+    </select>
+
+    <select id="selectUserByPage" resultMap="UserMap">
+        select
+        username, password, email, email_is_verified, id, created_at, updated_at, deleted_at, created_by, updated_by,
+        deleted_by, is_deleted
+        from user
+        <where>
+            <if test="entity.username != null and entity.username != ''">
+                and username = #{entity.username}
+            </if>
+            <if test="entity.password != null and entity.password != ''">
+                and password = #{entity.password}
+            </if>
+            <if test="entity.email != null and entity.email != ''">
+                and email = #{entity.email}
+            </if>
+            <if test="entity.emailIsVerified != null">
+                and email_is_verified = #{entity.emailIsVerified}
+            </if>
+            <if test="entity.id != null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.createdAt != null">
+                and created_at = #{entity.createdAt}
+            </if>
+            <if test="entity.updatedAt != null">
+                and updated_at = #{entity.updatedAt}
+            </if>
+            <if test="entity.deletedAt != null">
+                and deleted_at = #{entity.deletedAt}
+            </if>
+            <if test="entity.createdBy != null and entity.createdBy != ''">
+                and created_by = #{entity.createdBy}
+            </if>
+            <if test="entity.updatedBy != null and entity.updatedBy != ''">
+                and updated_by = #{entity.updatedBy}
+            </if>
+            <if test="entity.deletedBy != null and entity.deletedBy != ''">
+                and deleted_by = #{entity.deletedBy}
+            </if>
+            <if test="entity.isDeleted != null">
+                and is_deleted = #{entity.isDeleted}
+            </if>
+        </where>
+
+        <if test="pageable.sort != null">
+            <choose>
+                <when test="pageable.sort.size() > 0">
+                    order by
+                    <foreach collection="pageable.sort" item="sort" separator=",">
+                        ${sort.property} ${sort.direction}
+                    </foreach>
+                </when>
+                <otherwise>
+                    order by id desc
+                </otherwise>
+            </choose>
+        </if>
+
+
+        `limit` #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from user
+        <where>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="emailIsVerified != null">
+                and email_is_verified = #{emailIsVerified}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+            <if test="deletedAt != null">
+                and deleted_at = #{deletedAt}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                and updated_by = #{updatedBy}
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                and deleted_by = #{deletedBy}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+</mapper>
+

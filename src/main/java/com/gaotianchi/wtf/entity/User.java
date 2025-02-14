@@ -1,17 +1,18 @@
 package com.gaotianchi.wtf.entity;
 
+import java.util.Date;
+import java.io.Serial;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author gaotianchi
- * @since 2025-02-14 10:39:16
+ * @since 2025-02-14 11:33:25
  */
 @Data
 @Builder

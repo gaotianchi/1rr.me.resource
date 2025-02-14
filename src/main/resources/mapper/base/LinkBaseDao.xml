@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaotianchi.wtf.dao.base.LinkBaseDao">
+
+    <resultMap type="com.gaotianchi.wtf.entity.Link" id="LinkMap">
+        <result property="shortUrl" column="short_url" jdbcType="VARCHAR"/>
+        <result property="longUrl" column="long_url" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+        <result property="deletedAt" column="deleted_at" jdbcType="TIMESTAMP"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="deletedBy" column="deleted_by" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insertLink" keyProperty="id" useGeneratedKeys="true">
+        insert into link(short_url, long_url, user_id, created_at, updated_at, deleted_at, created_by, updated_by,
+                         deleted_by, is_deleted)
+        values (#{shortUrl}, #{longUrl}, #{userId}, #{createdAt}, #{updatedAt}, #{deletedAt}, #{createdBy},
+                #{updatedBy}, #{deletedBy}, #{isDeleted})
+    </insert>
+
+    <insert id="insertLinkInBatches" keyProperty="id" useGeneratedKeys="true">
+        insert into link(short_url, long_url, user_id, created_at, updated_at, deleted_at, created_by, updated_by,
+        deleted_by, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.shortUrl}, #{entity.longUrl}, #{entity.userId}, #{entity.createdAt}, #{entity.updatedAt},
+            #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy}, #{entity.isDeleted})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateLinkInBatches" keyProperty="id" useGeneratedKeys="true">
+        insert into link(short_url, long_url, user_id, created_at, updated_at, deleted_at, created_by, updated_by,
+        deleted_by, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.shortUrl}, #{entity.longUrl}, #{entity.userId}, #{entity.createdAt}, #{entity.updatedAt},
+            #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy}, #{entity.isDeleted})
+        </foreach>
+        on duplicate key update
+        short_url = values(short_url),
+        long_url = values(long_url),
+        user_id = values(user_id),
+        created_at = values(created_at),
+        updated_at = values(updated_at),
+        deleted_at = values(deleted_at),
+        created_by = values(created_by),
+        updated_by = values(updated_by),
+        deleted_by = values(deleted_by),
+        is_deleted = values(is_deleted)
+    </insert>
+
+    <update id="updateLink">
+        update link
+        <set>
+            <if test="shortUrl != null and shortUrl != ''">
+                short_url = #{shortUrl},
+            </if>
+            <if test="longUrl != null and longUrl != ''">
+                long_url = #{longUrl},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_by = #{createdBy},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy},
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                deleted_by = #{deletedBy},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLinkById">
+        delete
+        from link
+        where id = #{id}
+    </delete>
+
+    <select id="selectLinkById" resultMap="LinkMap">
+        select short_url,
+               long_url,
+               user_id,
+               id,
+               created_at,
+               updated_at,
+               deleted_at,
+               created_by,
+               updated_by,
+               deleted_by,
+               is_deleted
+        from link
+        where id = #{id}
+    </select>
+
+    <select id="selectLinkByPage" resultMap="LinkMap">
+        select
+        short_url, long_url, user_id, id, created_at, updated_at, deleted_at, created_by, updated_by, deleted_by,
+        is_deleted
+        from link
+        <where>
+            <if test="entity.shortUrl != null and entity.shortUrl != ''">
+                and short_url = #{entity.shortUrl}
+            </if>
+            <if test="entity.longUrl != null and entity.longUrl != ''">
+                and long_url = #{entity.longUrl}
+            </if>
+            <if test="entity.userId != null">
+                and user_id = #{entity.userId}
+            </if>
+            <if test="entity.id != null">
+                and id = #{entity.id}
+            </if>
+            <if test="entity.createdAt != null">
+                and created_at = #{entity.createdAt}
+            </if>
+            <if test="entity.updatedAt != null">
+                and updated_at = #{entity.updatedAt}
+            </if>
+            <if test="entity.deletedAt != null">
+                and deleted_at = #{entity.deletedAt}
+            </if>
+            <if test="entity.createdBy != null and entity.createdBy != ''">
+                and created_by = #{entity.createdBy}
+            </if>
+            <if test="entity.updatedBy != null and entity.updatedBy != ''">
+                and updated_by = #{entity.updatedBy}
+            </if>
+            <if test="entity.deletedBy != null and entity.deletedBy != ''">
+                and deleted_by = #{entity.deletedBy}
+            </if>
+            <if test="entity.isDeleted != null">
+                and is_deleted = #{entity.isDeleted}
+            </if>
+        </where>
+
+        <if test="pageable.sort != null">
+            <choose>
+                <when test="pageable.sort.size() > 0">
+                    order by
+                    <foreach collection="pageable.sort" item="sort" separator=",">
+                        ${sort.property} ${sort.direction}
+                    </foreach>
+                </when>
+                <otherwise>
+                    order by id desc
+                </otherwise>
+            </choose>
+        </if>
+
+
+        `limit` #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from link
+        <where>
+            <if test="shortUrl != null and shortUrl != ''">
+                and short_url = #{shortUrl}
+            </if>
+            <if test="longUrl != null and longUrl != ''">
+                and long_url = #{longUrl}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createdAt != null">
+                and created_at = #{createdAt}
+            </if>
+            <if test="updatedAt != null">
+                and updated_at = #{updatedAt}
+            </if>
+            <if test="deletedAt != null">
+                and deleted_at = #{deletedAt}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                and updated_by = #{updatedBy}
+            </if>
+            <if test="deletedBy != null and deletedBy != ''">
+                and deleted_by = #{deletedBy}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+        </where>
+    </select>
+</mapper>
+
