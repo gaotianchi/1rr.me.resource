@@ -1,8 +1,6 @@
 spring:
   application:
     name: wtf
-  profiles:
-    active: dev-home
 logging:
   level:
     root: info
@@ -21,3 +19,9 @@ management:
   endpoint:
     health:
       show-details: always
+sql:
+  mock:
+    enable: ${MOCK:false}
+  reset:
+    enable: ${RESET:false}
+    path: classpath:sql/reset-tables.sql

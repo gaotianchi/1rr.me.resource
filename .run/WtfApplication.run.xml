@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WtfApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="dev-office" />
+    <envs>
+      <env name="MOCK" value="false" />
+      <env name="RESET" value="true" />
+    </envs>
+    <module name="wtf" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.gaotianchi.wtf.WtfApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
