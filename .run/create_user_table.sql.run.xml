@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="create_user_table.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
-    <script-file value="$PROJECT_DIR$/src/main/resources/sql/schemas/create_user_table.sql" />
-    <script-mode>FILE</script-mode>
-    <data-source id="1bd49b3b-911f-48cc-b2a2-af7683c6872b" namespace="schema/&quot;wtf&quot;" />
-    <method v="2" />
-  </configuration>
-</component>
