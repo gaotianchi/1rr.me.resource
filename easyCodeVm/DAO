@@ -1,0 +1,44 @@
+##定义初始变量
+#set($tableName = $tool.append($tableInfo.name, "BaseDao"))
+#set($E = $!{tableInfo.name})
+#set($e = $!tool.firstLowerCase($!{tableInfo.name}))
+##设置回调
+$!callback.setFileName($tool.append($tableName, ".java"))
+$!callback.setSavePath($tool.append($tableInfo.savePath, "/dao/base"))
+
+##拿到主键
+#if(!$tableInfo.pkColumn.isEmpty())
+    #set($pk = $tableInfo.pkColumn.get(0))
+#end
+
+#if($tableInfo.savePackageName)package $!{tableInfo.savePackageName}.#{end}dao.base;
+
+import $!{tableInfo.savePackageName}.entity.$E;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
+import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+
+/**
+ * @author $!author
+ * @since $!time.currTime()
+ */
+ @Mapper
+public interface $!{tableName} {
+
+    void insert$!{E}($E $e);
+
+    void insert$!{E}InBatches(@Param("entities") List<$E> entities);
+
+    void insertOrUpdate$!{E}InBatches(@Param("entities") List<$E> entities);
+
+    void update$!{E}($E $e);
+
+    void delete$!{E}ById($!pk.shortType $!pk.name);
+
+    $E select$!{E}ById($!pk.shortType $!pk.name);
+
+    List<$E> select$!{E}ByPage(@Param("entity") $E $e, @Param("pageable") Pageable pageable);
+
+    long count($E $e);
+}
