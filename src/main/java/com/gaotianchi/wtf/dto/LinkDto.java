@@ -4,10 +4,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.Default;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 
 import java.io.Serial;
@@ -18,9 +15,6 @@ import java.io.Serializable;
  * @since 2025/2/15 15:26
  **/
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class LinkDto implements Serializable {
 
     @Serial

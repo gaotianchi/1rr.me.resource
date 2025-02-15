@@ -22,7 +22,7 @@ public class UserRest {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<?> addNewUser(
             @RequestBody UserDto userDto
     ) {
@@ -33,7 +33,7 @@ public class UserRest {
                 .build();
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<UserVo> getUserByUsername(
             @AuthenticationPrincipal Jwt jwt
     ) {
@@ -41,7 +41,7 @@ public class UserRest {
         return ResponseEntity.ok(userVo);
     }
 
-    @PutMapping
+    @PutMapping("")
     public ResponseEntity<Void> updateUserByUsername(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody UserDto userDto
@@ -52,7 +52,7 @@ public class UserRest {
                 .build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("")
     public ResponseEntity<Void> deleteUserByUsername(
             @AuthenticationPrincipal Jwt jwt
     ) {
