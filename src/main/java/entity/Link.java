@@ -1,4 +1,4 @@
-package com.gaotianchi.wtf.entity;
+package entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,25 +10,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * (User)
+ * (Link)
  *
  * @author gaotianchi
- * @since 2025-02-15 21:41:57
+ * @since 2025-02-15 21:41:08
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class Link implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String username;
-    private String password;
-    private String email;
-    private Integer emailIsVerified;
-    private Integer useThirdPartyLogin;
+    private String shortUrl;
+    private String originalUrl;
+    private Integer userId;
+    private Date expiredAt;
     private Integer id;
     private Date createdAt;
     private Date updatedAt;

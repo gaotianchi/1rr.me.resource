@@ -4,8 +4,9 @@
 
     <resultMap type="com.gaotianchi.wtf.entity.Link" id="LinkMap">
         <result property="shortUrl" column="short_url" jdbcType="VARCHAR"/>
-        <result property="longUrl" column="long_url" jdbcType="VARCHAR"/>
+        <result property="originalUrl" column="original_url" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="expiredAt" column="expired_at" jdbcType="TIMESTAMP"/>
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
         <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
@@ -17,34 +18,37 @@
     </resultMap>
 
     <insert id="insertLink" keyProperty="id" useGeneratedKeys="true">
-        insert into link(short_url, long_url, user_id, created_at, updated_at, deleted_at, created_by, updated_by,
-                         deleted_by, is_deleted)
-        values (#{shortUrl}, #{longUrl}, #{userId}, #{createdAt}, #{updatedAt}, #{deletedAt}, #{createdBy},
-                #{updatedBy}, #{deletedBy}, #{isDeleted})
+        insert into link(short_url, original_url, user_id, expired_at, created_at, updated_at, deleted_at, created_by,
+                         updated_by, deleted_by, is_deleted)
+        values (#{shortUrl}, #{originalUrl}, #{userId}, #{expiredAt}, #{createdAt}, #{updatedAt}, #{deletedAt},
+                #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
     </insert>
 
     <insert id="insertLinkInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into link(short_url, long_url, user_id, created_at, updated_at, deleted_at, created_by, updated_by,
-        deleted_by, is_deleted)
+        insert into link(short_url, original_url, user_id, expired_at, created_at, updated_at, deleted_at, created_by,
+        updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.shortUrl}, #{entity.longUrl}, #{entity.userId}, #{entity.createdAt}, #{entity.updatedAt},
-            #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy}, #{entity.isDeleted})
+            (#{entity.shortUrl}, #{entity.originalUrl}, #{entity.userId}, #{entity.expiredAt}, #{entity.createdAt},
+            #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy},
+            #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateLinkInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into link(short_url, long_url, user_id, created_at, updated_at, deleted_at, created_by, updated_by,
-        deleted_by, is_deleted)
+        insert into link(short_url, original_url, user_id, expired_at, created_at, updated_at, deleted_at, created_by,
+        updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.shortUrl}, #{entity.longUrl}, #{entity.userId}, #{entity.createdAt}, #{entity.updatedAt},
-            #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy}, #{entity.isDeleted})
+            (#{entity.shortUrl}, #{entity.originalUrl}, #{entity.userId}, #{entity.expiredAt}, #{entity.createdAt},
+            #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy},
+            #{entity.isDeleted})
         </foreach>
         on duplicate key update
         short_url = values(short_url),
-        long_url = values(long_url),
+        original_url = values(original_url),
         user_id = values(user_id),
+        expired_at = values(expired_at),
         created_at = values(created_at),
         updated_at = values(updated_at),
         deleted_at = values(deleted_at),
@@ -60,11 +64,14 @@
             <if test="shortUrl != null and shortUrl != ''">
                 short_url = #{shortUrl},
             </if>
-            <if test="longUrl != null and longUrl != ''">
-                long_url = #{longUrl},
+            <if test="originalUrl != null and originalUrl != ''">
+                original_url = #{originalUrl},
             </if>
             <if test="userId != null">
                 user_id = #{userId},
+            </if>
+            <if test="expiredAt != null">
+                expired_at = #{expiredAt},
             </if>
             <if test="createdAt != null">
                 created_at = #{createdAt},
@@ -99,8 +106,9 @@
 
     <select id="selectLinkById" resultMap="LinkMap">
         select short_url,
-               long_url,
+               original_url,
                user_id,
+               expired_at,
                id,
                created_at,
                updated_at,
@@ -115,18 +123,21 @@
 
     <select id="selectLinkByPage" resultMap="LinkMap">
         select
-        short_url, long_url, user_id, id, created_at, updated_at, deleted_at, created_by, updated_by, deleted_by,
-        is_deleted
+        short_url, original_url, user_id, expired_at, id, created_at, updated_at, deleted_at, created_by, updated_by,
+        deleted_by, is_deleted
         from link
         <where>
             <if test="entity.shortUrl != null and entity.shortUrl != ''">
                 and short_url = #{entity.shortUrl}
             </if>
-            <if test="entity.longUrl != null and entity.longUrl != ''">
-                and long_url = #{entity.longUrl}
+            <if test="entity.originalUrl != null and entity.originalUrl != ''">
+                and original_url = #{entity.originalUrl}
             </if>
             <if test="entity.userId != null">
                 and user_id = #{entity.userId}
+            </if>
+            <if test="entity.expiredAt != null">
+                and expired_at = #{entity.expiredAt}
             </if>
             <if test="entity.id != null">
                 and id = #{entity.id}
@@ -180,11 +191,14 @@
             <if test="shortUrl != null and shortUrl != ''">
                 and short_url = #{shortUrl}
             </if>
-            <if test="longUrl != null and longUrl != ''">
-                and long_url = #{longUrl}
+            <if test="originalUrl != null and originalUrl != ''">
+                and original_url = #{originalUrl}
             </if>
             <if test="userId != null">
                 and user_id = #{userId}
+            </if>
+            <if test="expiredAt != null">
+                and expired_at = #{expiredAt}
             </if>
             <if test="id != null">
                 and id = #{id}

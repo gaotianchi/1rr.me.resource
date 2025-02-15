@@ -1,18 +1,19 @@
 package com.gaotianchi.wtf.entity;
 
-import java.util.Date;
-import java.io.Serial;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
+ * (Link)
+ *
  * @author gaotianchi
- * @since 2025-02-14 11:33:25
+ * @since 2025-02-15 21:41:57
  */
 @Data
 @Builder
@@ -24,8 +25,9 @@ public class Link implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String shortUrl;
-    private String longUrl;
+    private String originalUrl;
     private Integer userId;
+    private Date expiredAt;
     private Integer id;
     private Date createdAt;
     private Date updatedAt;

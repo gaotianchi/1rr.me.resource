@@ -1,4 +1,4 @@
-package com.gaotianchi.wtf.entity;
+package entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import java.util.Date;
  * (User)
  *
  * @author gaotianchi
- * @since 2025-02-15 21:41:57
+ * @since 2025-02-15 21:41:09
  */
 @Data
 @Builder
