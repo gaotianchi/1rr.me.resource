@@ -1,6 +1,10 @@
 spring:
   application:
     name: wtf
+  cache:
+    redis:
+      cache-null-values: false
+      time-to-live: 3600
 logging:
   level:
     root: info
