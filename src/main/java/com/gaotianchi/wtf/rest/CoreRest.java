@@ -1,5 +1,6 @@
 package com.gaotianchi.wtf.rest;
 
+import com.gaotianchi.wtf.service.CoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import java.net.URISyntaxException;
 
 /**
  * 应用功能核心，实现短链接跳转
+ *
  * @author gaotianchi
  * @since 2025/2/13 10:02
  **/
@@ -18,11 +20,23 @@ import java.net.URISyntaxException;
 @RequestMapping("")
 public class CoreRest {
 
+    private final CoreService coreService;
+
+    public CoreRest(CoreService coreService) {
+        this.coreService = coreService;
+    }
+
     @GetMapping("{code}")
-    public ResponseEntity<Void> redirect(@PathVariable String code, @RequestParam(value = "password", required = false) String password) throws URISyntaxException {
+    public ResponseEntity<Void> redirect(
+            @PathVariable String code,
+            @RequestParam(value = "password", required = false) String password
+    ) throws URISyntaxException {
 
-        String longUrl = "";
+        String originalUrl = coreService.getOriginalUrl(code, password);
 
-        return ResponseEntity.status(HttpStatus.FOUND).location(new URI(longUrl)).build();
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .location(new URI(originalUrl))
+                .build();
     }
 }
