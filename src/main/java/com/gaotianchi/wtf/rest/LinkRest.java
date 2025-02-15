@@ -35,9 +35,11 @@ public class LinkRest {
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody LinkDto linkDto
     ) {
-        String short_link_code = linkService.createNewLink(jwt.getSubject(), linkDto);
-        URI location = URI.create("/" + short_link_code);
-        return ResponseEntity.created(location).build();
+        String shortLinkCode = linkService.createNewLink(jwt.getSubject(), linkDto);
+        URI location = URI.create("/api/links?code=" + shortLinkCode);
+        return ResponseEntity
+                .created(location)
+                .build();
     }
 
     @GetMapping
@@ -63,7 +65,9 @@ public class LinkRest {
             @RequestBody LinkDto linkDto
     ) {
         linkService.updateLinkByCode(shortLinkCode, linkDto);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @DeleteMapping
@@ -71,6 +75,8 @@ public class LinkRest {
             @RequestParam(name = "code") String shortLinkCode
     ) {
         linkService.deleteLinkByCode(shortLinkCode);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
