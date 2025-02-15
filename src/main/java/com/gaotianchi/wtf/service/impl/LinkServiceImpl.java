@@ -1,6 +1,9 @@
 package com.gaotianchi.wtf.service.impl;
 
+import com.gaotianchi.wtf.dto.LinkDto;
 import com.gaotianchi.wtf.service.LinkService;
+import com.gaotianchi.wtf.vo.LinkVo;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,8 +12,38 @@ import org.springframework.stereotype.Service;
  **/
 @Service("linkService")
 public class LinkServiceImpl implements LinkService {
+
     @Override
-    public boolean validateCode(String code) {
-        return false;
+    public String createNewLink(
+            String subject,
+            LinkDto linkDto
+    ) {
+        return "";
+    }
+
+    @Override
+    public LinkVo getLinkByCode(String shortLinkCode) {
+        return null;
+    }
+
+    @Override
+    public Page<LinkVo> getPageLinks(
+            String subject,
+            LinkDto linkDto
+    ) {
+        return null;
+    }
+
+    @Override
+    public void updateLinkByCode(
+            String shortLinkCode,
+            LinkDto linkDto
+    ) {
+
+    }
+
+    @Override
+    public void deleteLinkByCode(String shortLinkCode) {
+
     }
 }
