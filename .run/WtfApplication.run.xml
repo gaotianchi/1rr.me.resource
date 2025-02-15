@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="WtfApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="dev-office" />
+    <option name="ACTIVE_PROFILES" value="dev-home"/>
     <envs>
       <env name="MOCK" value="false" />
       <env name="RESET" value="false" />
