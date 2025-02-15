@@ -30,7 +30,7 @@ public class LinkRest {
         this.linkService = linkService;
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Void> addNewLink(
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody LinkDto linkDto
@@ -42,7 +42,7 @@ public class LinkRest {
                 .build();
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<LinkVo> getLinkByCode(
             @RequestParam(name = "code") String shortLinkCode
     ) {
@@ -50,7 +50,7 @@ public class LinkRest {
         return ResponseEntity.ok(linkVo);
     }
 
-    @GetMapping
+    @GetMapping("/pagination")
     public ResponseEntity<Page<LinkVo>> getPageLinks(
             @AuthenticationPrincipal Jwt jwt,
             @ModelAttribute LinkDto linkDto
@@ -59,7 +59,7 @@ public class LinkRest {
         return ResponseEntity.ok(links);
     }
 
-    @PutMapping
+    @PutMapping("")
     public ResponseEntity<Void> updateLinkByCode(
             @RequestParam(name = "code") String shortLinkCode,
             @RequestBody LinkDto linkDto
@@ -70,7 +70,7 @@ public class LinkRest {
                 .build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("")
     public ResponseEntity<Void> deleteLinkByCode(
             @RequestParam(name = "code") String shortLinkCode
     ) {
