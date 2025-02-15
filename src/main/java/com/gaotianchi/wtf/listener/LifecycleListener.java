@@ -18,12 +18,14 @@ import java.util.List;
 @Slf4j
 public class LifecycleListener implements SmartLifecycle {
 
+    private final DatabaseConnectionCheckTask databaseConnectionCheckTask;
+    private final DataInitializationTask dataInitializationTask;
     private boolean isRunning = false;
 
-    private final DatabaseConnectionCheckTask databaseConnectionCheckTask;
-    private final DataInitializationTask  dataInitializationTask;
-
-    public LifecycleListener(DatabaseConnectionCheckTask databaseConnectionCheckTask, DataInitializationTask dataInitializationTask) {
+    public LifecycleListener(
+            DatabaseConnectionCheckTask databaseConnectionCheckTask,
+            DataInitializationTask dataInitializationTask
+    ) {
         this.databaseConnectionCheckTask = databaseConnectionCheckTask;
         this.dataInitializationTask = dataInitializationTask;
     }

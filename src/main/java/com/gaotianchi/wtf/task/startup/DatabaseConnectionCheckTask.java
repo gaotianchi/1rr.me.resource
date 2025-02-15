@@ -21,7 +21,10 @@ public class DatabaseConnectionCheckTask implements Task {
     private final DataSource dataSource;
     private final RedisConnectionFactory redisConnectionFactory;
 
-    public DatabaseConnectionCheckTask(DataSource dataSource, RedisConnectionFactory redisConnectionFactory) {
+    public DatabaseConnectionCheckTask(
+            DataSource dataSource,
+            RedisConnectionFactory redisConnectionFactory
+    ) {
         this.dataSource = dataSource;
         this.redisConnectionFactory = redisConnectionFactory;
     }
@@ -67,7 +70,9 @@ public class DatabaseConnectionCheckTask implements Task {
         CompletableFuture<String> redisCheckFuture = CompletableFuture.supplyAsync(this::checkRedisConnection);
 
         // 等待所有数据库连接检查完成
-        CompletableFuture.allOf(mysqlCheckFuture, redisCheckFuture).join();
+        CompletableFuture
+                .allOf(mysqlCheckFuture, redisCheckFuture)
+                .join();
 
         // 打印出每个测试的结果
         String mysqlResult = mysqlCheckFuture.get();
