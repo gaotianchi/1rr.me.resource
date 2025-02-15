@@ -1,9 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="WtfApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="dev-home"/>
+      <option name="ACTIVE_PROFILES" value="dev-home"/>
     <envs>
+        <env name="GOOGLE_CLIENT_ID" value=""/>
       <env name="MOCK" value="false" />
       <env name="RESET" value="false" />
+        <env name="GOOGLE_CLIENT_SECRET" value=""/>
     </envs>
     <module name="wtf" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.gaotianchi.wtf.WtfApplication" />

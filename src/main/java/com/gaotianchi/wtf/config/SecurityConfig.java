@@ -20,7 +20,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         JwtIssuerAuthenticationManagerResolver authenticationManagerResolver = JwtIssuerAuthenticationManagerResolver.fromTrustedIssuers("https://accounts.google.com", "https://github.com");
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]+}").permitAll().anyRequest().authenticated()).oauth2ResourceServer(oauth2 -> oauth2.authenticationManagerResolver(authenticationManagerResolver));
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/api/test/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]+}").permitAll().anyRequest().authenticated()).oauth2ResourceServer(oauth2 -> oauth2.authenticationManagerResolver(authenticationManagerResolver));
         return http.build();
     }
 }
