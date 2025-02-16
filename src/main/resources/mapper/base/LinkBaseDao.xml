@@ -7,7 +7,7 @@
         <result property="originalUrl" column="original_url" jdbcType="VARCHAR"/>
         <result property="expiredAt" column="expired_at" jdbcType="TIMESTAMP"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
         <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
@@ -19,29 +19,29 @@
     </resultMap>
 
     <insert id="insertLink" keyProperty="id" useGeneratedKeys="true">
-        insert into link(code, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
+        insert into link(code, original_url, expired_at, password, username, created_at, updated_at, deleted_at,
                          created_by, updated_by, deleted_by, is_deleted)
-        values (#{code}, #{originalUrl}, #{expiredAt}, #{password}, #{userId}, #{createdAt}, #{updatedAt}, #{deletedAt},
-                #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
+        values (#{code}, #{originalUrl}, #{expiredAt}, #{password}, #{username}, #{createdAt}, #{updatedAt},
+                #{deletedAt}, #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
     </insert>
 
     <insert id="insertLinkInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into link(code, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
+        insert into link(code, original_url, expired_at, password, username, created_at, updated_at, deleted_at,
         created_by, updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.code}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.userId},
+            (#{entity.code}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.username},
             #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy},
             #{entity.deletedBy}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateLinkInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into link(code, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
+        insert into link(code, original_url, expired_at, password, username, created_at, updated_at, deleted_at,
         created_by, updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.code}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.userId},
+            (#{entity.code}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.username},
             #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy},
             #{entity.deletedBy}, #{entity.isDeleted})
         </foreach>
@@ -50,7 +50,7 @@
         original_url = values(original_url),
         expired_at = values(expired_at),
         password = values(password),
-        user_id = values(user_id),
+        username = values(username),
         created_at = values(created_at),
         updated_at = values(updated_at),
         deleted_at = values(deleted_at),
@@ -75,8 +75,8 @@
             <if test="password != null and password != ''">
                 password = #{password},
             </if>
-            <if test="userId != null">
-                user_id = #{userId},
+            <if test="username != null and username != ''">
+                username = #{username},
             </if>
             <if test="createdAt != null">
                 created_at = #{createdAt},
@@ -114,7 +114,7 @@
                original_url,
                expired_at,
                password,
-               user_id,
+               username,
                id,
                created_at,
                updated_at,
@@ -129,7 +129,7 @@
 
     <select id="selectLinkByPage" resultMap="LinkMap">
         select
-        code, original_url, expired_at, password, user_id, id, created_at, updated_at, deleted_at, created_by,
+        code, original_url, expired_at, password, username, id, created_at, updated_at, deleted_at, created_by,
         updated_by, deleted_by, is_deleted
         from link
         <where>
@@ -145,8 +145,8 @@
             <if test="entity.password != null and entity.password != ''">
                 and password = #{entity.password}
             </if>
-            <if test="entity.userId != null">
-                and user_id = #{entity.userId}
+            <if test="entity.username != null and entity.username != ''">
+                and username = #{entity.username}
             </if>
             <if test="entity.id != null">
                 and id = #{entity.id}
@@ -209,8 +209,8 @@
             <if test="password != null and password != ''">
                 and password = #{password}
             </if>
-            <if test="userId != null">
-                and user_id = #{userId}
+            <if test="username != null and username != ''">
+                and username = #{username}
             </if>
             <if test="id != null">
                 and id = #{id}

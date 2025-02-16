@@ -30,9 +30,9 @@ CREATE TABLE link
     original_url VARCHAR(255)        NOT NULL,
     expired_at TIMESTAMP           NULL,
     password   VARCHAR(255)        NULL,
-    user_id    INT                 NULL,
+    username   VARCHAR(255)        NULL,
 
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE,
 
     id           INT                 NOT NULL AUTO_INCREMENT,
 
