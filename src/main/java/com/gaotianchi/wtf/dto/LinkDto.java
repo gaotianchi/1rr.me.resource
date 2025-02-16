@@ -27,6 +27,8 @@ public class LinkDto implements Serializable {
     @Size(groups = {AddNewLinkGroup.class}, min = 8, message = "密码长度至少为8个字符")
     private String password;
 
+    private String code;
+
     public interface AddNewLinkGroup extends Default {
     }
 }

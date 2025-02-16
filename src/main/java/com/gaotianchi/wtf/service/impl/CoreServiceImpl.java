@@ -1,5 +1,7 @@
 package com.gaotianchi.wtf.service.impl;
 
+import com.gaotianchi.wtf.dto.LinkDto;
+import com.gaotianchi.wtf.service.CacheService;
 import com.gaotianchi.wtf.service.CoreService;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +11,21 @@ import org.springframework.stereotype.Service;
  **/
 @Service("CoreService")
 public class CoreServiceImpl implements CoreService {
+
+    private final CacheService cacheService;
+
+    public CoreServiceImpl(CacheService cacheService) {
+        this.cacheService = cacheService;
+    }
+
     @Override
     public String getOriginalUrl(
             String code,
             String password
     ) {
+
+        LinkDto linkDto = cacheService.getCoreLinkByCode(code);
+
         return "";
     }
 }
