@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.URL;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author gaotianchi
@@ -23,7 +24,7 @@ public class LinkDto implements Serializable {
     @URL(groups = {AddNewLinkGroup.class}, message = "URL格式无效")
     private String originalUrl;
     @Future(groups = {AddNewLinkGroup.class}, message = "过期时间必须是将来的时间")
-    private long expireAt;
+    private LocalDateTime expireAt;
     @Size(groups = {AddNewLinkGroup.class}, min = 8, message = "密码长度至少为8个字符")
     private String password;
 

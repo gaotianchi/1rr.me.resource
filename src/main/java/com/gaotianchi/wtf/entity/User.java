@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * (User)
  *
  * @author gaotianchi
- * @since 2025-02-16 10:13:18
+ * @since 2025-02-16 15:17:11
  */
 @Data
 @Builder
@@ -30,9 +30,9 @@ public class User implements Serializable {
     private Integer emailIsVerified;
     private Integer useThirdPartyLogin;
     private Integer id;
-    private Date createdAt;
-    private Date updatedAt;
-    private Date deletedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
     private String createdBy;
     private String updatedBy;
     private String deletedBy;

@@ -10,7 +10,7 @@ import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * @author gaotianchi
@@ -71,12 +71,11 @@ public class CoreServiceImpl implements CoreService {
     }
 
     private boolean isLinkExpired(LinkDto linkDto) {
-        if (linkDto.getExpireAt() == 0) {
+        LocalDateTime expireAt = linkDto.getExpireAt();
+        if (expireAt == null) {
             return false;
         }
-        return Instant
-                .ofEpochMilli(linkDto.getExpireAt())
-                .isBefore(Instant.now());
+        return expireAt.isBefore(LocalDateTime.now());
     }
 
     private boolean isPasswordInvalid(

@@ -15,8 +15,8 @@ CREATE TABLE user
     updated_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at            TIMESTAMP           NULL,
 
-    created_by            VARCHAR(255)        NOT NULL,
-    updated_by            VARCHAR(255)        NOT NULL,
+    created_by VARCHAR(255) NULL,
+    updated_by VARCHAR(255) NULL,
     deleted_by            VARCHAR(255)        NULL,
 
     is_deleted            BOOLEAN   DEFAULT FALSE,
@@ -40,8 +40,8 @@ CREATE TABLE link
     updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at   TIMESTAMP           NULL,
 
-    created_by   VARCHAR(255)        NOT NULL,
-    updated_by   VARCHAR(255)        NOT NULL,
+    created_by VARCHAR(255)        NULL,
+    updated_by VARCHAR(255)        NULL,
     deleted_by   VARCHAR(255)        NULL,
 
     is_deleted   BOOLEAN   DEFAULT FALSE,

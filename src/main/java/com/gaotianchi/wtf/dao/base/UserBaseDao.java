@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author gaotianchi
- * @since 2025-02-16 10:13:18
+ * @since 2025-02-16 15:17:12
  */
 @Mapper
 public interface UserBaseDao {

@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * (Link)
  *
  * @author gaotianchi
- * @since 2025-02-16 15:10:53
+ * @since 2025-02-16 15:17:11
  */
 @Data
 @Builder
@@ -26,13 +26,13 @@ public class Link implements Serializable {
 
     private String code;
     private String originalUrl;
-    private Date expiredAt;
+    private LocalDateTime expiredAt;
     private String password;
     private String username;
     private Integer id;
-    private Date createdAt;
-    private Date updatedAt;
-    private Date deletedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
     private String createdBy;
     private String updatedBy;
     private String deletedBy;
