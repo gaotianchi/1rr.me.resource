@@ -36,7 +36,7 @@ public class CoreServiceImpl implements CoreService {
     public String getOriginalUrl(
             String code,
             String password
-    ) throws LinkExpiredException, LinkNotFoundException, InvalidPasswordException {
+    ) {
 
         LinkDto linkDto = cacheService.getCoreLinkByCode(code);
 

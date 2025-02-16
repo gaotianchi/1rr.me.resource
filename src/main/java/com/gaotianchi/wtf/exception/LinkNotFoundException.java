@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  **/
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class LinkNotFoundException extends Throwable {
+public class LinkNotFoundException extends RuntimeException {
 
     public LinkNotFoundException(String code) {
         super(String.format("与 %s 关联的短链接不存在", code));
