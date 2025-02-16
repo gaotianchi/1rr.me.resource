@@ -6,8 +6,10 @@ import com.gaotianchi.wtf.exception.LinkExpiredException;
 import com.gaotianchi.wtf.exception.LinkNotFoundException;
 import com.gaotianchi.wtf.service.CacheService;
 import com.gaotianchi.wtf.service.CoreService;
+import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
 /**
@@ -21,15 +23,6 @@ public class CoreServiceImpl implements CoreService {
 
     public CoreServiceImpl(CacheService cacheService) {
         this.cacheService = cacheService;
-    }
-
-    private static boolean isPasswordInvalid(
-            String password,
-            LinkDto linkDto
-    ) {
-        return linkDto.getPassword() != null && !linkDto
-                .getPassword()
-                .equals(password);
     }
 
     @Override
@@ -55,6 +48,28 @@ public class CoreServiceImpl implements CoreService {
         return linkDto.getOriginalUrl();
     }
 
+    @Override
+    public String generateShortLinkCode(String originalUrl) {
+        int hash = Hashing
+                .murmur3_32_fixed()
+                .hashString(originalUrl, StandardCharsets.UTF_8)
+                .asInt()
+                ;
+        return toBase62(hash).substring(0, 6);
+    }
+
+    private String toBase62(int num) {
+        String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            sb.append(CHARSET.charAt(num % 62));
+            num /= 62;
+        }
+        return sb
+                .reverse()
+                .toString();
+    }
+
     private boolean isLinkExpired(LinkDto linkDto) {
         if (linkDto.getExpireAt() == 0) {
             return false;
@@ -62,5 +77,14 @@ public class CoreServiceImpl implements CoreService {
         return Instant
                 .ofEpochMilli(linkDto.getExpireAt())
                 .isBefore(Instant.now());
+    }
+
+    private boolean isPasswordInvalid(
+            String password,
+            LinkDto linkDto
+    ) {
+        return linkDto.getPassword() != null && !linkDto
+                .getPassword()
+                .equals(password);
     }
 }
