@@ -3,7 +3,7 @@
 <mapper namespace="com.gaotianchi.wtf.dao.base.LinkBaseDao">
 
     <resultMap type="com.gaotianchi.wtf.entity.Link" id="LinkMap">
-        <result property="shortUrl" column="short_url" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
         <result property="originalUrl" column="original_url" jdbcType="VARCHAR"/>
         <result property="expiredAt" column="expired_at" jdbcType="TIMESTAMP"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
@@ -19,34 +19,34 @@
     </resultMap>
 
     <insert id="insertLink" keyProperty="id" useGeneratedKeys="true">
-        insert into link(short_url, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
+        insert into link(code, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
                          created_by, updated_by, deleted_by, is_deleted)
-        values (#{shortUrl}, #{originalUrl}, #{expiredAt}, #{password}, #{userId}, #{createdAt}, #{updatedAt},
-                #{deletedAt}, #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
+        values (#{code}, #{originalUrl}, #{expiredAt}, #{password}, #{userId}, #{createdAt}, #{updatedAt}, #{deletedAt},
+                #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
     </insert>
 
     <insert id="insertLinkInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into link(short_url, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
+        insert into link(code, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
         created_by, updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.shortUrl}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.userId},
+            (#{entity.code}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.userId},
             #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy},
             #{entity.deletedBy}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateLinkInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into link(short_url, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
+        insert into link(code, original_url, expired_at, password, user_id, created_at, updated_at, deleted_at,
         created_by, updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.shortUrl}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.userId},
+            (#{entity.code}, #{entity.originalUrl}, #{entity.expiredAt}, #{entity.password}, #{entity.userId},
             #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy},
             #{entity.deletedBy}, #{entity.isDeleted})
         </foreach>
         on duplicate key update
-        short_url = values(short_url),
+        code = values(code),
         original_url = values(original_url),
         expired_at = values(expired_at),
         password = values(password),
@@ -63,8 +63,8 @@
     <update id="updateLink">
         update link
         <set>
-            <if test="shortUrl != null and shortUrl != ''">
-                short_url = #{shortUrl},
+            <if test="code != null and code != ''">
+                code = #{code},
             </if>
             <if test="originalUrl != null and originalUrl != ''">
                 original_url = #{originalUrl},
@@ -110,7 +110,7 @@
     </delete>
 
     <select id="selectLinkById" resultMap="LinkMap">
-        select short_url,
+        select code,
                original_url,
                expired_at,
                password,
@@ -129,12 +129,12 @@
 
     <select id="selectLinkByPage" resultMap="LinkMap">
         select
-        short_url, original_url, expired_at, password, user_id, id, created_at, updated_at, deleted_at, created_by,
+        code, original_url, expired_at, password, user_id, id, created_at, updated_at, deleted_at, created_by,
         updated_by, deleted_by, is_deleted
         from link
         <where>
-            <if test="entity.shortUrl != null and entity.shortUrl != ''">
-                and short_url = #{entity.shortUrl}
+            <if test="entity.code != null and entity.code != ''">
+                and code = #{entity.code}
             </if>
             <if test="entity.originalUrl != null and entity.originalUrl != ''">
                 and original_url = #{entity.originalUrl}
@@ -197,8 +197,8 @@
         select count(1)
         from link
         <where>
-            <if test="shortUrl != null and shortUrl != ''">
-                and short_url = #{shortUrl}
+            <if test="code != null and code != ''">
+                and code = #{code}
             </if>
             <if test="originalUrl != null and originalUrl != ''">
                 and original_url = #{originalUrl}
