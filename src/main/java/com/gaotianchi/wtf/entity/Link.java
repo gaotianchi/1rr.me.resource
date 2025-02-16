@@ -13,7 +13,7 @@ import java.util.Date;
  * (Link)
  *
  * @author gaotianchi
- * @since 2025-02-15 21:41:57
+ * @since 2025-02-16 10:13:18
  */
 @Data
 @Builder
@@ -26,8 +26,9 @@ public class Link implements Serializable {
 
     private String shortUrl;
     private String originalUrl;
-    private Integer userId;
     private Date expiredAt;
+    private String password;
+    private Integer userId;
     private Integer id;
     private Date createdAt;
     private Date updatedAt;

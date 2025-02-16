@@ -28,8 +28,9 @@ CREATE TABLE link
 (
     short_url    VARCHAR(255) UNIQUE NOT NULL,
     original_url VARCHAR(255)        NOT NULL,
+    expired_at TIMESTAMP    NULL,
+    password   VARCHAR(255) NULL,
     user_id      INT                 NOT NULL,
-    expired_at   TIMESTAMP           NULL,
 
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
 
