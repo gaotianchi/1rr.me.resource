@@ -23,7 +23,7 @@ public class LinkDto implements Serializable {
     @URL(groups = {AddNewLinkGroup.class}, message = "URL格式无效")
     private String originalUrl;
     @Future(groups = {AddNewLinkGroup.class}, message = "过期时间必须是将来的时间")
-    private String expireAt;
+    private long expireAt;
     @Size(groups = {AddNewLinkGroup.class}, min = 8, message = "密码长度至少为8个字符")
     private String password;
 

@@ -1,5 +1,8 @@
 package com.gaotianchi.wtf.rest;
 
+import com.gaotianchi.wtf.exception.InvalidPasswordException;
+import com.gaotianchi.wtf.exception.LinkExpiredException;
+import com.gaotianchi.wtf.exception.LinkNotFoundException;
 import com.gaotianchi.wtf.service.CoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,7 +33,7 @@ public class CoreRest {
     public ResponseEntity<Void> redirect(
             @PathVariable String code,
             @RequestParam(value = "password", required = false) String password
-    ) throws URISyntaxException {
+    ) throws URISyntaxException, LinkExpiredException, LinkNotFoundException, InvalidPasswordException {
 
         String originalUrl = coreService.getOriginalUrl(code, password);
 
