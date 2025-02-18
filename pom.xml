@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>com.gaotianchi</groupId>
-    <artifactId>wtf</artifactId>
+    <artifactId>resource</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>wtf</name>
     <description>短链接服务</description>
