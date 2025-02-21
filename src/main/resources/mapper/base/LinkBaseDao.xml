@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gaotianchi.wtf.dao.base.LinkBaseDao">
+<mapper namespace="me._1rr.resource.dao.base.LinkBaseDao">
 
     <resultMap type="me._1rr.resource.entity.Link" id="LinkMap">
         <result property="code" column="code" jdbcType="VARCHAR"/>
