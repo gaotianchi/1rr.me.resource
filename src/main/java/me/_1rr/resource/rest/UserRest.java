@@ -29,7 +29,7 @@ public class UserRest {
             @RequestBody
             UserDto userDto
     ) {
-        String username = userService.createNewUser(userDto);
+        String username = userService.registerUser(userDto);
         URI location = URI.create("/api/users?username=" + username);
         return ResponseEntity
                 .created(location)

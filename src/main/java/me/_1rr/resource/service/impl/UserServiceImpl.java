@@ -8,6 +8,8 @@ import me._1rr.resource.vo.UserVo;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * @author gaotianchi
  * @since 2025/2/15 下午5:43
@@ -21,26 +23,8 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    /**
-     * 规范化用户名
-     *
-     * @param rawUsername 原始用户名
-     * @return 规范化后的用户名
-     */
-    private String normalizeUsername(String rawUsername) {
-        if (rawUsername == null || rawUsername.isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be null or empty");
-        }
-        String normalized = rawUsername.toLowerCase();
-        normalized = normalized.replaceAll("\\s+", "_");
-        normalized = normalized.replaceAll("[^a-z0-9_]", "");
-        long timestamp = System.currentTimeMillis() / 1000;
-        normalized = normalized + "_" + timestamp;
-        return normalized;
-    }
-
     @Override
-    public String createNewUser(UserDto userDto) {
+    public String registerUser(UserDto userDto) {
         Integer useThirdPartyLogin = userDto.getUseThirdPartyLogin();
         String username = userDto.getUsername();
         if (useThirdPartyLogin != null && useThirdPartyLogin == 1) {
@@ -52,6 +36,11 @@ public class UserServiceImpl implements UserService {
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
                 .useThirdPartyLogin(useThirdPartyLogin)
+                .emailIsVerified(userDto.getEmailIsVerified())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .createdBy(username)
+                .updatedBy(username)
                 .build()
                 ;
         try {
@@ -78,5 +67,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserByUsername(String subject) {
 
+    }
+
+    /**
+     * 规范化用户名
+     *
+     * @param rawUsername 原始用户名
+     * @return 规范化后的用户名
+     */
+    private String normalizeUsername(String rawUsername) {
+        if (rawUsername == null || rawUsername.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+        String normalized = rawUsername.toLowerCase();
+        normalized = normalized.replaceAll("\\s+", "_");
+        normalized = normalized.replaceAll("[^a-z0-9_]", "");
+        long timestamp = System.currentTimeMillis() / 1000;
+        normalized = normalized + "_" + timestamp;
+        return normalized;
     }
 }

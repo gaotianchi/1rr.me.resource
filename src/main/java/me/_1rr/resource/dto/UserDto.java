@@ -19,7 +19,11 @@ public class UserDto {
     private String password;
 
     @NotBlank(groups = {CreateUser.class})
+    private Integer emailIsVerified;
+
+    @NotBlank(groups = {CreateUser.class})
     @Email(groups = {CreateUser.class})
     private String email;
+
     private Integer useThirdPartyLogin;
 }
