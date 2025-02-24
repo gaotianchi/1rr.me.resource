@@ -21,22 +21,45 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
+    /**
+     * 规范化用户名
+     *
+     * @param rawUsername 原始用户名
+     * @return 规范化后的用户名
+     */
+    private String normalizeUsername(String rawUsername) {
+        if (rawUsername == null || rawUsername.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+        String normalized = rawUsername.toLowerCase();
+        normalized = normalized.replaceAll("\\s+", "_");
+        normalized = normalized.replaceAll("[^a-z0-9_]", "");
+        long timestamp = System.currentTimeMillis() / 1000;
+        normalized = normalized + "_" + timestamp;
+        return normalized;
+    }
+
     @Override
     public String createNewUser(UserDto userDto) {
+        Integer useThirdPartyLogin = userDto.getUseThirdPartyLogin();
+        String username = userDto.getUsername();
+        if (useThirdPartyLogin != null && useThirdPartyLogin == 1) {
+            username = normalizeUsername(username);
+        }
         User user = User
                 .builder()
-                .username(userDto.getUsername())
+                .username(username)
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
-                .useThirdPartyLogin(userDto.getUseThirdPartyLogin())
+                .useThirdPartyLogin(useThirdPartyLogin)
                 .build()
                 ;
         try {
             userDao.insertUser(user);
         } catch (DuplicateKeyException e) {
-            return userDto.getUsername();
+            return username;
         }
-        return userDto.getUsername();
+        return username;
     }
 
     @Override

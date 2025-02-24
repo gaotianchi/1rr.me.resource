@@ -1,12 +1,13 @@
 package me._1rr.resource.rest;
 
+import lombok.extern.slf4j.Slf4j;
 import me._1rr.resource.dto.UserDto;
 import me._1rr.resource.service.UserService;
 import me._1rr.resource.vo.UserVo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -24,7 +25,9 @@ public class UserRest {
 
     @PostMapping("")
     public ResponseEntity<?> addNewUser(
-            @RequestBody UserDto userDto
+            @Validated(UserDto.CreateUser.class)
+            @RequestBody
+            UserDto userDto
     ) {
         String username = userService.createNewUser(userDto);
         URI location = URI.create("/api/users?username=" + username);

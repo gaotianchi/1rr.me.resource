@@ -31,3 +31,9 @@ sql:
   reset:
     enable: ${RESET:false}
     path: classpath:sql/reset-tables.sql
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: me._1rr.resource.dao
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
