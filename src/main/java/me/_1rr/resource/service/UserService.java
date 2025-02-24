@@ -8,7 +8,7 @@ import me._1rr.resource.vo.UserVo;
  * @since 2025/2/15 下午5:43
  **/
 public interface UserService {
-    String createNewUser(UserDto userDto);
+    String registerUser(UserDto userDto);
 
     UserVo getUserByUsername(String subject);
 

@@ -8,6 +8,8 @@ import me._1rr.resource.vo.UserVo;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * @author gaotianchi
  * @since 2025/2/15 下午5:43
@@ -22,21 +24,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String createNewUser(UserDto userDto) {
+    public String registerUser(UserDto userDto) {
+        Integer useThirdPartyLogin = userDto.getUseThirdPartyLogin();
+        String username = userDto.getUsername();
+
+        if (useThirdPartyLogin == 1) {
+            username = normalizeUsername(username);
+        }
+
         User user = User
                 .builder()
-                .username(userDto.getUsername())
+                .username(username)
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
-                .useThirdPartyLogin(userDto.getUseThirdPartyLogin())
+                .useThirdPartyLogin(useThirdPartyLogin)
+                .emailIsVerified(userDto.getEmailIsVerified())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build()
                 ;
         try {
             userDao.insertUser(user);
         } catch (DuplicateKeyException e) {
-            return userDto.getUsername();
+            return username;
         }
-        return userDto.getUsername();
+        return username;
     }
 
     @Override
@@ -55,5 +67,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserByUsername(String subject) {
 
+    }
+
+    /**
+     * 规范化用户名
+     *
+     * @param rawUsername 原始用户名
+     * @return 规范化后的用户名
+     */
+    private String normalizeUsername(String rawUsername) {
+        if (rawUsername == null || rawUsername.isEmpty()) {
+            throw new IllegalArgumentException("用户名不能为空");
+        }
+        String normalized = rawUsername.toLowerCase();
+        normalized = normalized.replaceAll("\\s+", "_");
+        normalized = normalized.replaceAll("[^a-z0-9_]", "");
+        long timestamp = System.currentTimeMillis() / 1000;
+        normalized = normalized + "_" + timestamp;
+        return normalized;
     }
 }
