@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SpringBoot:dev-office" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="dev-office" />
+    <envs>
+      <env name="MOCK" value="false" />
+      <env name="RESET" value="false" />
+      <env name="INIT" value="false" />
+    </envs>
+    <module name="me.1rr.resource" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="me._1rr.resource.Application" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

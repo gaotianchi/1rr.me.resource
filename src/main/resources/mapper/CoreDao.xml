@@ -18,8 +18,8 @@
         FROM link
         WHERE code = #{code}
     </delete>
-    <select id="getLinkCoreByCode" resultType="me._1rr.resource.dto.LinkDto">
-        SELECT original_url, expired_at, password
+    <select id="getLinkCoreByCode" resultType="me._1rr.resource.vo.LinkCoreVo">
+        SELECT code, original_url, expired_at, password, username
         FROM link
         WHERE code = #{code}
     </select>

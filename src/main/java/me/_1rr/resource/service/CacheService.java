@@ -1,6 +1,7 @@
 package me._1rr.resource.service;
 
 import me._1rr.resource.dto.LinkDto;
+import me._1rr.resource.vo.LinkCoreVo;
 
 /**
  * @author gaotianchi
@@ -8,7 +9,7 @@ import me._1rr.resource.dto.LinkDto;
  **/
 public interface CacheService {
 
-    LinkDto getCoreLinkByCode(String code);
+    LinkCoreVo getCoreLinkByCode(String code);
 
     void updateCoreLinkByCode(LinkDto linkDto);
 

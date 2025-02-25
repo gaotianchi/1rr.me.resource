@@ -1,6 +1,7 @@
 package me._1rr.resource.dao;
 
 import me._1rr.resource.dto.LinkDto;
+import me._1rr.resource.vo.LinkCoreVo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -17,7 +18,7 @@ public interface CoreDao {
      * @author gaotianchi
      * @since 2025/2/16 上午10:16
      **/
-    LinkDto getLinkCoreByCode(String code);
+    LinkCoreVo getLinkCoreByCode(String code);
 
     void updateLinkCoreByCode(LinkDto linkDto);
 

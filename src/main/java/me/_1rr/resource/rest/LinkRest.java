@@ -3,6 +3,7 @@ package me._1rr.resource.rest;
 import me._1rr.resource.dto.LinkDto;
 import me._1rr.resource.service.LinkService;
 import me._1rr.resource.service.impl.LinkServiceImpl;
+import me._1rr.resource.vo.LinkCoreVo;
 import me._1rr.resource.vo.LinkVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -47,10 +48,10 @@ public class LinkRest {
     }
 
     @GetMapping("")
-    public ResponseEntity<LinkVo> getLinkByCode(
+    public ResponseEntity<LinkCoreVo> getLinkByCode(
             @RequestParam(name = "code") String shortLinkCode
     ) {
-        LinkVo linkVo = linkService.getLinkByCode(shortLinkCode);
+        LinkCoreVo linkVo = linkService.getLinkByCode(shortLinkCode);
         return ResponseEntity.ok(linkVo);
     }
 

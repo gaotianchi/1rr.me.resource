@@ -2,6 +2,7 @@ package me._1rr.resource.service;
 
 
 import me._1rr.resource.dto.LinkDto;
+import me._1rr.resource.vo.LinkCoreVo;
 import me._1rr.resource.vo.LinkVo;
 import org.springframework.data.domain.Page;
 
@@ -16,7 +17,7 @@ public interface LinkService {
             LinkDto linkDto
     );
 
-    LinkVo getLinkByCode(String shortLinkCode);
+    LinkCoreVo getLinkByCode(String shortLinkCode);
 
     Page<LinkVo> getPageLinks(
             String subject,

@@ -1,12 +1,12 @@
 package me._1rr.resource.service.impl;
 
 import com.google.common.hash.Hashing;
-import me._1rr.resource.dto.LinkDto;
 import me._1rr.resource.exception.InvalidPasswordException;
 import me._1rr.resource.exception.LinkExpiredException;
 import me._1rr.resource.exception.LinkNotFoundException;
 import me._1rr.resource.service.CacheService;
 import me._1rr.resource.service.CoreService;
+import me._1rr.resource.vo.LinkCoreVo;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -31,21 +31,21 @@ public class CoreServiceImpl implements CoreService {
             String password
     ) {
 
-        LinkDto linkDto = cacheService.getCoreLinkByCode(code);
+        LinkCoreVo linkVo = cacheService.getCoreLinkByCode(code);
 
-        if (linkDto == null) {
+        if (linkVo == null) {
             throw new LinkNotFoundException(code);
         }
 
-        if (isLinkExpired(linkDto)) {
+        if (isLinkExpired(linkVo)) {
             throw new LinkExpiredException(code);
         }
 
-        if (isPasswordInvalid(password, linkDto)) {
+        if (isPasswordInvalid(password, linkVo)) {
             throw new InvalidPasswordException(code);
         }
 
-        return linkDto.getOriginalUrl();
+        return linkVo.getOriginalUrl();
     }
 
     @Override
@@ -83,8 +83,8 @@ public class CoreServiceImpl implements CoreService {
     }
 
 
-    private boolean isLinkExpired(LinkDto linkDto) {
-        LocalDateTime expireAt = linkDto.getExpireAt();
+    private boolean isLinkExpired(LinkCoreVo linkCoreVo) {
+        LocalDateTime expireAt = linkCoreVo.getExpiredAt();
         if (expireAt == null) {
             return false;
         }
@@ -93,9 +93,9 @@ public class CoreServiceImpl implements CoreService {
 
     private boolean isPasswordInvalid(
             String password,
-            LinkDto linkDto
+            LinkCoreVo linkVo
     ) {
-        return linkDto.getPassword() != null && !linkDto
+        return linkVo.getPassword() != null && !linkVo
                 .getPassword()
                 .equals(password);
     }

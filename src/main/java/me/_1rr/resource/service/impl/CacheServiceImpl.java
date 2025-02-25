@@ -3,6 +3,7 @@ package me._1rr.resource.service.impl;
 import me._1rr.resource.dao.CoreDao;
 import me._1rr.resource.dto.LinkDto;
 import me._1rr.resource.service.CacheService;
+import me._1rr.resource.vo.LinkCoreVo;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,7 +24,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     @Cacheable(value = "link", key = "#code")
-    public LinkDto getCoreLinkByCode(String code) {
+    public LinkCoreVo getCoreLinkByCode(String code) {
         return coreDao.getLinkCoreByCode(code);
     }
 

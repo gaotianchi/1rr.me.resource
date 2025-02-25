@@ -3,8 +3,10 @@ package me._1rr.resource.service.impl;
 import me._1rr.resource.dao.LinkDao;
 import me._1rr.resource.dto.LinkDto;
 import me._1rr.resource.entity.Link;
+import me._1rr.resource.service.CacheService;
 import me._1rr.resource.service.CoreService;
 import me._1rr.resource.service.LinkService;
+import me._1rr.resource.vo.LinkCoreVo;
 import me._1rr.resource.vo.LinkVo;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,16 @@ public class LinkServiceImpl implements LinkService {
 
     private final LinkDao linkDao;
     private final CoreService coreService;
+    private final CacheService cacheService;
 
     public LinkServiceImpl(
             LinkDao linkDao,
-            CoreService coreService
+            CoreService coreService,
+            CacheService cacheService
     ) {
         this.linkDao = linkDao;
         this.coreService = coreService;
+        this.cacheService = cacheService;
     }
 
 
@@ -65,8 +70,10 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public LinkVo getLinkByCode(String code) {
-        return null;
+    public LinkCoreVo getLinkByCode(String code) {
+        LinkCoreVo coreLinkByCode = cacheService.getCoreLinkByCode(code);
+        coreLinkByCode.setPassword(null);
+        return coreLinkByCode;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users", "/api/links")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]+}")
+                        .requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]+}", "/api/links")
                         .permitAll()
 
                         .anyRequest()
