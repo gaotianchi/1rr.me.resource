@@ -31,6 +31,9 @@ sql:
   reset:
     enable: ${RESET:false}
     path: classpath:sql/reset-tables.sql
+  init:
+    enable: ${INIT:false}
+    path: classpath:sql/init-tables.sql
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: me._1rr.resource.dao

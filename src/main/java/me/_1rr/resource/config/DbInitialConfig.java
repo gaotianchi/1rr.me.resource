@@ -16,6 +16,7 @@ public class DbInitialConfig {
 
     private Reset reset;
     private Mock mock;
+    private Init init;
 
     @Data
     public static class Reset {
@@ -25,6 +26,12 @@ public class DbInitialConfig {
 
     @Data
     public static class Mock {
+        private Boolean enable;
+        private Resource path;
+    }
+
+    @Data
+    public static class Init {
         private Boolean enable;
         private Resource path;
     }
