@@ -27,7 +27,7 @@ CREATE TABLE user
 CREATE TABLE link
 (
     code       VARCHAR(255) UNIQUE NOT NULL,
-    original_url VARCHAR(255)        NOT NULL,
+    original_url TEXT NOT NULL,
     expired_at TIMESTAMP           NULL,
     password   VARCHAR(255)        NULL,
     username   VARCHAR(255)        NULL,
