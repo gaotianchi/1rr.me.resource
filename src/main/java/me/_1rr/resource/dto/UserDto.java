@@ -12,18 +12,14 @@ import lombok.Data;
 @Data
 public class UserDto {
 
-    public interface CreateUser extends Default {
-    }
+    @NotBlank(groups = {RegisterUserGroup.class})
+    @Email(groups = {RegisterUserGroup.class})
+    private String email;
 
     private String username;
     private String password;
-
-    @NotBlank(groups = {CreateUser.class})
     private Integer emailIsVerified;
-
-    @NotBlank(groups = {CreateUser.class})
-    @Email(groups = {CreateUser.class})
-    private String email;
-
     private Integer useThirdPartyLogin;
+    public interface RegisterUserGroup extends Default {
+    }
 }

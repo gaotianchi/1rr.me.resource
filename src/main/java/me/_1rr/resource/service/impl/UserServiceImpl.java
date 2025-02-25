@@ -27,9 +27,11 @@ public class UserServiceImpl implements UserService {
     public String registerUser(UserDto userDto) {
         Integer useThirdPartyLogin = userDto.getUseThirdPartyLogin();
         String username = userDto.getUsername();
-        if (useThirdPartyLogin != null && useThirdPartyLogin == 1) {
+
+        if (useThirdPartyLogin == 1) {
             username = normalizeUsername(username);
         }
+
         User user = User
                 .builder()
                 .username(username)
@@ -39,8 +41,6 @@ public class UserServiceImpl implements UserService {
                 .emailIsVerified(userDto.getEmailIsVerified())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .createdBy(username)
-                .updatedBy(username)
                 .build()
                 ;
         try {
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
      */
     private String normalizeUsername(String rawUsername) {
         if (rawUsername == null || rawUsername.isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be null or empty");
+            throw new IllegalArgumentException("用户名不能为空");
         }
         String normalized = rawUsername.toLowerCase();
         normalized = normalized.replaceAll("\\s+", "_");

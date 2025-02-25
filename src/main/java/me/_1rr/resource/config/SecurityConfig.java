@@ -31,10 +31,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/test/**")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users")
+                        .requestMatchers(HttpMethod.POST, "/api/users", "/api/links")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]+}")
+                        .requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]+}", "/api/links")
                         .permitAll()
+
                         .anyRequest()
                         .authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.authenticationManagerResolver(authenticationManagerResolver));
