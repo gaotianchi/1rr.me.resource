@@ -1,8 +1,8 @@
 package me._1rr.resource.task.startup;
 
+import lombok.extern.slf4j.Slf4j;
 import me._1rr.resource.config.DbInitialConfig;
 import me._1rr.resource.task.Task;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +39,18 @@ public class DataInitializationTask implements Task {
                         .getReset()
                         .getPath());
                 log.info("重置数据库完成");
+            }
+
+            if (dbInitialConfig
+                    .getInit()
+                    .getEnable() && dbInitialConfig
+                    .getReset()
+                    .getEnable()) {
+                log.info("正在初始化数据库 ...");
+                ScriptUtils.executeSqlScript(connection, dbInitialConfig
+                        .getInit()
+                        .getPath());
+                log.info("初始化数据库完成");
             }
 
             if (dbInitialConfig
