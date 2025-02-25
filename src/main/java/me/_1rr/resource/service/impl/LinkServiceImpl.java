@@ -36,8 +36,11 @@ public class LinkServiceImpl implements LinkService {
             LinkDto linkDto
     ) {
         String code = coreService.generateShortLinkCode(linkDto.getOriginalUrl());
-        Link link = Link
-                .builder()
+        Link.LinkBuilder builder = Link.builder();
+        builder
+                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .username(subject)
                 .originalUrl(linkDto.getOriginalUrl())
                 .code(code)
@@ -46,9 +49,17 @@ public class LinkServiceImpl implements LinkService {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .createdBy(subject)
-                .updatedBy(subject)
-                .build()
-                ;
+                .updatedBy(subject);
+
+        // 对于匿名用户，设置默认过期时间为7天
+        if (subject == null) {
+            builder.createdBy("anonymous");
+            builder.updatedBy("anonymous");
+            builder.username("anonymous");
+            builder.expiredAt(LocalDateTime.now().plusDays(7));
+        }
+
+        Link link = builder.build();
         linkDao.insertLink(link);
         return code;
     }

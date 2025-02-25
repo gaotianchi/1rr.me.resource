@@ -35,7 +35,11 @@ public class LinkRest {
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody LinkDto linkDto
     ) {
-        String shortLinkCode = linkService.createNewLink(jwt.getSubject(), linkDto);
+        String subject = null;
+        if (jwt != null) {
+            subject = jwt.getSubject();
+        }
+        String shortLinkCode = linkService.createNewLink(subject, linkDto);
         URI location = URI.create("/api/links?code=" + shortLinkCode);
         return ResponseEntity
                 .created(location)

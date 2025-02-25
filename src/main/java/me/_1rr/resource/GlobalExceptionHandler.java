@@ -4,6 +4,7 @@ package me._1rr.resource;
 import me._1rr.resource.exception.InvalidPasswordException;
 import me._1rr.resource.exception.LinkExpiredException;
 import me._1rr.resource.exception.LinkNotFoundException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,6 +36,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body("无效密码: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<String> handleDuplicateKey(DuplicateKeyException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body("数据库约束冲突: " + ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
