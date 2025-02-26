@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gaotianchi.wtf.dao.base.UserBaseDao">
+<mapper namespace="me._1rr.resource.dao.base.UserBaseDao">
 
-    <resultMap type="com.gaotianchi.wtf.entity.User" id="UserMap">
+    <resultMap type="me._1rr.resource.entity.User" id="UserMap">
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="emailIsVerified" column="email_is_verified" jdbcType="INTEGER"/>
+        <result property="useThirdPartyLogin" column="use_third_party_login" jdbcType="INTEGER"/>
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
         <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
@@ -18,37 +19,38 @@
     </resultMap>
 
     <insert id="insertUser" keyProperty="id" useGeneratedKeys="true">
-        insert into user(username, password, email, email_is_verified, created_at, updated_at, deleted_at, created_by,
-                         updated_by, deleted_by, is_deleted)
-        values (#{username}, #{password}, #{email}, #{emailIsVerified}, #{createdAt}, #{updatedAt}, #{deletedAt},
-                #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
+        insert into user(username, password, email, email_is_verified, use_third_party_login, created_at, updated_at,
+                         deleted_at, created_by, updated_by, deleted_by, is_deleted)
+        values (#{username}, #{password}, #{email}, #{emailIsVerified}, #{useThirdPartyLogin}, #{createdAt},
+                #{updatedAt}, #{deletedAt}, #{createdBy}, #{updatedBy}, #{deletedBy}, #{isDeleted})
     </insert>
 
     <insert id="insertUserInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into user(username, password, email, email_is_verified, created_at, updated_at, deleted_at, created_by,
-        updated_by, deleted_by, is_deleted)
+        insert into user(username, password, email, email_is_verified, use_third_party_login, created_at, updated_at,
+        deleted_at, created_by, updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.emailIsVerified}, #{entity.createdAt},
-            #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy},
-            #{entity.isDeleted})
+            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.emailIsVerified},
+            #{entity.useThirdPartyLogin}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt},
+            #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateUserInBatches" keyProperty="id" useGeneratedKeys="true">
-        insert into user(username, password, email, email_is_verified, created_at, updated_at, deleted_at, created_by,
-        updated_by, deleted_by, is_deleted)
+        insert into user(username, password, email, email_is_verified, use_third_party_login, created_at, updated_at,
+        deleted_at, created_by, updated_by, deleted_by, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.emailIsVerified}, #{entity.createdAt},
-            #{entity.updatedAt}, #{entity.deletedAt}, #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy},
-            #{entity.isDeleted})
+            (#{entity.username}, #{entity.password}, #{entity.email}, #{entity.emailIsVerified},
+            #{entity.useThirdPartyLogin}, #{entity.createdAt}, #{entity.updatedAt}, #{entity.deletedAt},
+            #{entity.createdBy}, #{entity.updatedBy}, #{entity.deletedBy}, #{entity.isDeleted})
         </foreach>
         on duplicate key update
         username = values(username),
         password = values(password),
         email = values(email),
         email_is_verified = values(email_is_verified),
+        use_third_party_login = values(use_third_party_login),
         created_at = values(created_at),
         updated_at = values(updated_at),
         deleted_at = values(deleted_at),
@@ -72,6 +74,9 @@
             </if>
             <if test="emailIsVerified != null">
                 email_is_verified = #{emailIsVerified},
+            </if>
+            <if test="useThirdPartyLogin != null">
+                use_third_party_login = #{useThirdPartyLogin},
             </if>
             <if test="createdAt != null">
                 created_at = #{createdAt},
@@ -109,6 +114,7 @@
                password,
                email,
                email_is_verified,
+               use_third_party_login,
                id,
                created_at,
                updated_at,
@@ -123,8 +129,8 @@
 
     <select id="selectUserByPage" resultMap="UserMap">
         select
-        username, password, email, email_is_verified, id, created_at, updated_at, deleted_at, created_by, updated_by,
-        deleted_by, is_deleted
+        username, password, email, email_is_verified, use_third_party_login, id, created_at, updated_at, deleted_at,
+        created_by, updated_by, deleted_by, is_deleted
         from user
         <where>
             <if test="entity.username != null and entity.username != ''">
@@ -138,6 +144,9 @@
             </if>
             <if test="entity.emailIsVerified != null">
                 and email_is_verified = #{entity.emailIsVerified}
+            </if>
+            <if test="entity.useThirdPartyLogin != null">
+                and use_third_party_login = #{entity.useThirdPartyLogin}
             </if>
             <if test="entity.id != null">
                 and id = #{entity.id}
@@ -199,6 +208,9 @@
             </if>
             <if test="emailIsVerified != null">
                 and email_is_verified = #{emailIsVerified}
+            </if>
+            <if test="useThirdPartyLogin != null">
+                and use_third_party_login = #{useThirdPartyLogin}
             </if>
             <if test="id != null">
                 and id = #{id}

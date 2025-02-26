@@ -15,8 +15,8 @@ CREATE TABLE user
     updated_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at            TIMESTAMP           NULL,
 
-    created_by            VARCHAR(255)        NOT NULL,
-    updated_by            VARCHAR(255)        NOT NULL,
+    created_by VARCHAR(255) NULL,
+    updated_by VARCHAR(255) NULL,
     deleted_by            VARCHAR(255)        NULL,
 
     is_deleted            BOOLEAN   DEFAULT FALSE,
@@ -26,12 +26,13 @@ CREATE TABLE user
 
 CREATE TABLE link
 (
-    short_url    VARCHAR(255) UNIQUE NOT NULL,
-    original_url VARCHAR(255)        NOT NULL,
-    user_id      INT                 NOT NULL,
-    expired_at   TIMESTAMP           NULL,
+    code       VARCHAR(255) UNIQUE NOT NULL,
+    original_url TEXT NOT NULL,
+    expired_at TIMESTAMP           NULL,
+    password   VARCHAR(255)        NULL,
+    username   VARCHAR(255)        NULL,
 
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
+    FOREIGN KEY (username) REFERENCES user (username) ON DELETE CASCADE,
 
     id           INT                 NOT NULL AUTO_INCREMENT,
 
@@ -39,8 +40,8 @@ CREATE TABLE link
     updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at   TIMESTAMP           NULL,
 
-    created_by   VARCHAR(255)        NOT NULL,
-    updated_by   VARCHAR(255)        NOT NULL,
+    created_by VARCHAR(255)        NULL,
+    updated_by VARCHAR(255)        NULL,
     deleted_by   VARCHAR(255)        NULL,
 
     is_deleted   BOOLEAN   DEFAULT FALSE,

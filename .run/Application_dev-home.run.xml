@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Application:dev-home" type="SpringBootApplicationConfigurationType"
+                   factoryName="Spring Boot">
+        <option name="ACTIVE_PROFILES" value="dev-home"/>
+        <envs>
+            <env name="RESET" value="true"/>
+            <env name="MOCK" value="false"/>
+            <env name="INIT" value="true"/>
+        </envs>
+        <module name="1rr.me.resource"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="me._1rr.resource.Application"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
+</component>
